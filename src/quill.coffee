@@ -97,6 +97,8 @@ class Quill extends EventEmitter2
     return container
 
   addFormat: (name, config) ->
+    Format.FORMATS[name] = config
+    @options.formats.push(name)
     @editor.doc.addFormat(name, config)
     this.emit(Quill.events.FORMAT_INIT, name)
 
