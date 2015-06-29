@@ -16,6 +16,19 @@ class Toolbar
   constructor: (@quill, @options) ->
     @options = { container: @options } if _.isString(@options) or _.isElement(@options)
     throw new Error('container required for toolbar', @options) unless @options.container?
+    if _.isObject(@options.formats)
+      if _.isObject(@options.formats.line)
+        for formatName, format of @options.formats.line
+          Toolbar.formats.LINE[formatName] = format
+      if _.isObject(@options.formats.select)
+        for formatName, format of @options.formats.select
+          Toolbar.formats.SELECT[formatName] = format
+      if _.isObject(@options.formats.toggle)
+        for formatName, format of @options.formats.toggle
+          Toolbar.formats.TOGGLE[formatName] = format
+      if _.isObject(@options.formats.tooltip)
+        for formatName, format of @options.formats.tooltip
+          Toolbar.formats.TOOLTIP[formatName] = format
     @container = if _.isString(@options.container) then document.querySelector(@options.container) else @options.container
     @inputs = {}
     @preventUpdate = false
