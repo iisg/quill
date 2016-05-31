@@ -80,6 +80,9 @@ class Keyboard
   _initDeletes: ->
     this.addHotkey([dom.KEYS.DELETE, dom.KEYS.BACKSPACE], (range, hotkey) =>
       if range? and @quill.getLength() > 0
+        if range.end - range.start == @quill.getLength()
+          # This is for case when somebody tries to remove empty content with Ctrl + A
+          return false
         if range.start != range.end
           @quill.deleteText(range.start, range.end, Quill.sources.USER)
         else
